@@ -14,6 +14,17 @@ namespace EventBus
         public EventBus()
         {
             _eventHandlers = new ConcurrentDictionary<Type, List<Type>>();
+            Init();
+        }
+        public void Init()
+        {
+            AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(p => p.GetTypes())
+                .Where(p => _eventHandlerType
+                .IsAssignableFrom(p))
+                .ToList()
+                .ForEach(p => Subscribe(p));
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : IEvent

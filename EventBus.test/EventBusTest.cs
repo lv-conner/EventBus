@@ -10,8 +10,8 @@ namespace EventBus.test
         public void Case1()
         {
             IEventBus eventBus = new EventBus();
-            eventBus.Subscribe(typeof(CNHelloEventHandler));
-            eventBus.Subscribe(typeof(ENHelloEventHandler));
+            //eventBus.Subscribe(typeof(CNHelloEventHandler));
+            //eventBus.Subscribe(typeof(ENHelloEventHandler));
             eventBus.Publish(new HelloEvent() { Name = "tim lv" });
         }
     }
