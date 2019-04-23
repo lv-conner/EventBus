@@ -9,8 +9,8 @@ namespace EventBus
 {
     public class EventBus : IEventBus
     {
-        private readonly Type _eventHandlerType = typeof(IEventHandler);
-        private readonly ConcurrentDictionary<Type, List<Type>> _eventHandlers;
+        protected readonly Type _eventHandlerType = typeof(IEventHandler);
+        protected readonly ConcurrentDictionary<Type, List<Type>> _eventHandlers;
         public EventBus()
         {
             _eventHandlers = new ConcurrentDictionary<Type, List<Type>>();
@@ -27,7 +27,7 @@ namespace EventBus
                 .ForEach(p => Subscribe(p));
         }
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
+        public virtual void Publish<TEvent>(TEvent @event) where TEvent : IEvent
         {
             var eventType = typeof(TEvent);
             if(_eventHandlers.TryGetValue(eventType,out var handlers))
